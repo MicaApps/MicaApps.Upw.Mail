@@ -62,41 +62,6 @@ namespace MicaApps.Upw.Mail.Pages
                 // 处理传递过来的参数
                 this.tag = (string)e.Parameter;
                 // 在这里添加你的逻辑
-
-            }
-
-
-            if (this.loginStatus.userData != null)
-            {
-                this.listview.ItemsSource = this.loginStatus.userData.letters;
-                await this.loginStatus.userData.CollectLetter();
-                
-            }
-            timer.Start();
-        }
-
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
-
-            // 停止定时器，释放资源
-            timer.Stop();
-        }
-
-        private void listview_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            // 获取点击的项的数据
-            Models.Letter clickedItem = e.ClickedItem as Models.Letter;
-
-            // 处理点击事件，例如显示一个消息框
-            if (clickedItem != null)
-            {
-                this.textblock_area.Text = clickedItem.TextBody;
-            }
-            else
-            {
-                this.textblock_area.Text = @"Error!";
             }
         }
     }
