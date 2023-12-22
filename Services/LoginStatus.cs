@@ -14,5 +14,9 @@ namespace MicaApps.Upw.Mail.Services
         public bool IsLogin { get=>this.userData != null && this.userData.IsLogin;}
 
 
+
+
+
+
     }
 }

@@ -10,10 +10,16 @@ namespace MicaApps.Upw.Mail.Models
     /// <summary>
     /// 专门用于储存每封信件
     /// </summary>
-    internal class Letter :MimeMessage
+    internal class Letter
     {
-        public string title { get => this.Subject; }
+        public MimeMessage mimeMessage { get;private set; }
+        public string title { get => this.mimeMessage.Subject; }
 
+
+        public Letter(MimeMessage mimeMessage)
+        {
+            this.mimeMessage = mimeMessage;
+        }
 
     }
 }

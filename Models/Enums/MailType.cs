@@ -9,8 +9,8 @@ namespace MicaApps.Upw.Mail.Models.Enums
     /// <summary>
     /// 邮件类型
     /// </summary>
-    internal enum MailType
+    public enum MailType
     {
-        Receiving, Sending
+        Receive, Send , Junk ,Deleted
     }
 }

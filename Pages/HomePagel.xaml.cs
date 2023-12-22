@@ -30,15 +30,8 @@ namespace MicaApps.Upw.Mail.Pages
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             // 获取点击的菜单项的 Tag
-            string tag = args.InvokedItemContainer.Tag.ToString();
-
-            // 根据 Tag 导航到相应的页面
-            switch (tag)
-            {
-                case @"receive":
-                    this.frame_main.Navigate(typeof(MailPage),tag);
-                    break;
-            }
+            Models.Enums.MailType tag = (Models.Enums.MailType)args.InvokedItemContainer.Tag;
+            this.frame_main.Navigate(typeof(MailPage), tag);
         }
     }
 }

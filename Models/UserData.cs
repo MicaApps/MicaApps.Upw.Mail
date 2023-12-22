@@ -19,7 +19,7 @@ namespace MicaApps.Upw.Mail.Models
 
 
 
-        public abstract Task CollectLetter();
+        public abstract Task CollectLetter(ObservableCollection<Letter> letters,Enums.MailType mailType);
         public abstract Task LoginIn();
 
 

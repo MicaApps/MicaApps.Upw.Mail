@@ -25,8 +25,8 @@ namespace MicaApps.Upw.Mail.Pages
     /// </summary>
     public sealed partial class MailPage : Page
     {
-        private readonly Services.LoginStatus loginStatus = App.Services.GetService<Services.LoginStatus>();
-        private string tag;
+        private readonly Services.LoginStatus loginStatus = App.services.GetService<Services.LoginStatus>();
+        private Models.Enums.MailType tag;
         private DispatcherTimer timer;
 
 
@@ -41,13 +41,13 @@ namespace MicaApps.Upw.Mail.Pages
             this.timer.Interval = TimeSpan.FromSeconds(1); // 设置定时器间隔为1秒
             this.timer.Tick += (sender, e) =>
             {
-                this.textblock_status.Text = this.loginStatus.userData != null ? this.loginStatus.userData.letters.Count().ToString() : @"未连接";
+                
             };
         }
 
 
 
-        
+        private ObservableCollection<Models.Letter> letters = new ObservableCollection<Models.Letter>();
 
 
         /// <summary>
@@ -60,8 +60,46 @@ namespace MicaApps.Upw.Mail.Pages
             if (e.Parameter != null)
             {
                 // 处理传递过来的参数
-                this.tag = (string)e.Parameter;
+                this.tag = (Models.Enums.MailType)e.Parameter;
                 // 在这里添加你的逻辑
+                if (this.loginStatus.IsLogin)
+                {
+                    await this.loginStatus.userData.CollectLetter(this.letters,this.tag);
+                }
+
+            }
+
+            timer.Start();
+        }
+
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+
+            // 停止定时器，释放资源
+            timer.Stop();
+        }
+
+
+
+
+
+
+        private void listview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // 获取点击的项的数据
+            Models.Letter clickedItem = e.AddedItems.First() as Models.Letter;
+
+            // 处理点击事件，例如显示一个消息框
+
+            if (clickedItem != null && clickedItem.mimeMessage.HtmlBody !=null)
+            {
+                this.webview.NavigateToString(clickedItem.mimeMessage.HtmlBody);
+            }
+            else
+            {
+                this.webview.NavigateToString(@"Error");
             }
         }
     }

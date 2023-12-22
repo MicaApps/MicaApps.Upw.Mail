@@ -5,13 +5,16 @@
     xmlns:local="using:MicaApps.Upw.Mail.Pages"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:enum="using:MicaApps.Upw.Mail.Models.Enums"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
         <NavigationView ItemInvoked="NavigationView_ItemInvoked" IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItems>
-                <NavigationViewItem Tag="receive">收件箱</NavigationViewItem>
+                <NavigationViewItem Tag="{x:Bind enum:MailType.Receive}">收件箱</NavigationViewItem>
+                <NavigationViewItem Tag="{x:Bind enum:MailType.Send}">发件箱</NavigationViewItem>
+                <NavigationViewItem Tag="{x:Bind enum:MailType.Deleted}">已删邮件</NavigationViewItem>
             </NavigationView.MenuItems>
             <Frame x:Name="frame_main"/>
         </NavigationView>

@@ -12,25 +12,24 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.Row="0" Grid.Column="0" BorderThickness="2" Margin="10" x:Name="listview" ItemClick="listview_ItemClick">
+        <ListView Grid.Row="0" Grid.Column="0" BorderThickness="2" Margin="10" x:Name="listview" SelectionChanged="listview_SelectionChanged" ItemsSource="{x:Bind letters}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Letter">
-                    <Grid BorderThickness="2" Margin="2" Background="AliceBlue">
-                        <TextBlock Text="{Binding title}" FontSize="25"/>
+                    <Grid Margin="1">
+                        <TextBlock Text="{Binding title}" TextWrapping="Wrap"/>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <TextBlock Margin="10" x:Name="textblock_area" Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" Text="s"/>
+        <WebView Grid.Row="0" Grid.Column="1" Margin="10" x:Name="webview"/>
 
-        <TextBlock Grid.Row="1" x:Name="textblock_status" Text="Null" FontSize="30"/>
+
 
 
         <!--<StackPanel>

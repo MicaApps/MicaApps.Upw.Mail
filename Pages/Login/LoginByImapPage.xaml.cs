@@ -25,8 +25,8 @@ namespace MicaApps.Upw.Mail.Pages.Login
     /// </summary>
     public sealed partial class LoginByImapPage : Page
     {
-        private readonly Services.StaticValues staticValues = App.Services.GetService<Services.StaticValues>();
-        private readonly Services.LoginStatus loginStatus = App.Services.GetService<Services.LoginStatus>();
+        private readonly Services.StaticValues staticValues = App.services.GetService<Services.StaticValues>();
+        private readonly Services.LoginStatus loginStatus = App.services.GetService<Services.LoginStatus>();
 
         public LoginByImapPage()
         {
@@ -35,14 +35,16 @@ namespace MicaApps.Upw.Mail.Pages.Login
 
         private void combox_mailhost_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Grid grid = new Grid();
-            var m = grid.Margin;
+            if (this.staticValues.imapInfos.ContainsKey(this.combox_mailhost.Text))
+            {
+                this.host = this.staticValues.imapInfos[this.combox_mailhost.Text].host;
+            }
         }
 
 
         private string username { get => this.textbox_username.Text + '@' + this.combox_mailhost.Text; }
         private string password { get => this.textbox_password.Text; }
-        private string host { get=>this.textbox_host.Text; }
+        private string host { get => this.textbox_host.Text; set => this.textbox_host.Text = value; }
         private int port { get => Convert.ToInt32(this.textbox_port.Text); }
 
 

@@ -26,8 +26,9 @@ namespace MicaApps.Upw.Mail
         /// <summary>
         /// 注入依赖
         /// </summary>
-        public static IServiceProvider Services { get; private set; } = new ServiceCollection()
+        public static IServiceProvider services { get; private set; } = new ServiceCollection()
             .AddSingleton<Services.LoginStatus>()
+             .AddSingleton<Services.StaticValues>()
             .BuildServiceProvider();
 
 

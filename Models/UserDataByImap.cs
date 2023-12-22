@@ -8,6 +8,9 @@ using MailKit.Net.Imap;
 using MailKit.Security;
 using Windows.UI.Xaml;
 using MailKit;
+using MailKit.Search;
+using System.Collections.ObjectModel;
+using Windows.Media.Protection.PlayReady;
 
 namespace MicaApps.Upw.Mail.Models
 {
@@ -36,15 +39,44 @@ namespace MicaApps.Upw.Mail.Models
             await this.imapInfo.ConnectAsync(this.username,this.authorizationCode);
         }
 
-        public override async Task CollectLetter()
+        public override async Task CollectLetter(ObservableCollection<Letter> letters,Enums.MailType mailType)
         {
             var inbox = this.imapInfo.Inbox;
-            await inbox.OpenAsync(FolderAccess.ReadOnly);
-            for (int i = 0; i < inbox.Count; i++)
+            
+
+
+
+            IList<UniqueId> ids = null;
+            switch (mailType)
             {
-                var message = await inbox.GetMessageAsync(i);
-                this.letters.Add(message as Letter);
+                case Enums.MailType.Receive:
+                    await inbox.OpenAsync(FolderAccess.ReadOnly);
+                    ids = await inbox.SearchAsync(SearchQuery.All);
+                    break;
+                case Enums.MailType.Send:
+                    inbox = this.imapInfo.GetFolder(SpecialFolder.Sent);
+                    await inbox.OpenAsync(FolderAccess.ReadOnly);
+                    ids = await inbox.SearchAsync(SearchQuery.All);
+                    break;
+                case Enums.MailType.Deleted:
+                    await inbox.OpenAsync(FolderAccess.ReadOnly);
+                    ids = await inbox.SearchAsync(SearchQuery.Deleted);
+                    break;
             }
+
+            
+
+            letters.Clear();
+
+            if(ids != null)
+            {
+                foreach (var id in ids)
+                {
+                    var message = await inbox.GetMessageAsync(id);
+                    letters.Add(new Letter(message));
+                }
+            }
+            
         }
 
 
