@@ -10,9 +10,8 @@ namespace MicaApps.Upw.Mail.Services
     internal class LoginStatus
     {
         public Models.UserData userData { get; set; }
-        
-        public bool IsLogin { get=>this.userData != null && this.userData.IsLogin;}
 
+        public bool IsLogin { get=>this.userData != null && this.userData.IsLogin;}
 
 
     }
